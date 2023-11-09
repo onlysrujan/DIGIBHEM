@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Booking Registration Form</title>
+    <style>
+       
+    body {
+
+        font-family: Arial, sans-serif;
+    }
+    .container {
+
+        max-width: 800px; 
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f4f4; 
+
+    }
+    label {
+
+        display: block;
+        margin-bottom: 10px; 
+        font-weight: bold; 
+
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+
+    select {
+
+        width: 100%;
+        padding: 12px; 
+        margin-bottom: 15px; 
+        border: 1px solid #333; 
+        border-radius: 5px; 
+
+    }
+    #totalCost, #balance {
+
+        font-weight: bold;
+        font-size: 16px; 
+        color: #008000; 
+
+    }
+    </style>
+    
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Hotel Booking Registration Form</h2>
+
+        <form id="bookingForm">
+
+            <h3>Customer Info</h3>
+
+            <label for="customerName">Customer Name:</label>
+
+            <input type="text" id="customerName" required>
+
+            <label for="checkInDate">Check-in Date:</label>
+
+            <input type="date" id="checkInDate" required>
+
+            <label for="totalDays">Total No of Days:</label>
+
+            <input type="number" id="totalDays" required>
+
+            <label for="totalPersons">Total No of Persons:</label>
+
+            <input type="number" id="totalPersons" required>
+
+            <h3>Room Information</h3>
+
+            <label for="roomType">Room Type:</label>
+
+            <select id="roomType">
+
+                <option value="Delux Room">Delux Room</option>
+
+                <option value="Suite Room">Suite Room</option>
+
+            </select>
+
+            <label for="amenities">Amenities:</label>
+
+            <select id="amenities" multiple>
+
+                <option value="AC">AC</option>
+
+                <option value="Locker">Locker</option>
+
+            </select>
+
+            <h3>Advance Payment</h3>
+
+            <label for="advanceAmount">Advance Amount:</label>
+
+            <input type="number" id="advanceAmount" required>
+
+            <h3>Balance Amount</h3>
+
+            <p>Balance: <span id="balance">0</span></p>
+
+            <h3>Total Cost Calculation</h3>
+
+            <p>Total Room Cost: <span id="roomCost">0</span></p>
+
+            <p>Total Amenities Cost: <span id="amenitiesCost">0</span></p>
+
+            <p>Total Cost: <span id="totalCost">0</span></p>
+
+            <h3>Additional Charges</h3>
+
+            <p>Upto 2 People: No Change in Cost</p>
+
+            <p>Per Day Cost for Extra Person: 1000/-</p>
+
+            <input type="submit" value="Submit">
+
+        </form>
+        
+        <script>
+            const bookingForm = document.getElementById("bookingForm");
+
+            const roomCost = document.getElementById("roomCost");
+
+             const amenitiesCost = document.getElementById("amenitiesCost");
+
+            const totalCost = document.getElementById("totalCost");
+
+            const balance = document.getElementById("balance");
+
+            bookingForm.addEventListener("submit", function (e) 
+            {
+
+            e.preventDefault();
+
+   
+    const deluxRoomRate = 2500;
+
+    const suiteRoomRate = 4000;
+
+    const acRate = 1000;
+
+    const lockerRate = 300;
+
+    
+    const totalDays = parseInt(document.getElementById("totalDays").value);
+
+    const roomType = document.getElementById("roomType").value;
+
+    const amenities = document.getElementById("amenities").selectedOptions;
+
+    const advanceAmount = parseInt(document.getElementById("advanceAmount").value);
+
+    let roomRate = 0;
+
+    if (roomType === "Delux Room") {
+        roomRate = deluxRoomRate;
+    } else if (roomType === "Suite Room") {
+        roomRate = suiteRoomRate;
+    }
+
+    const totalRoomCost = roomRate * totalDays;
+
+    roomCost.textContent = `${totalRoomCost}/-`;
+
+    let amenitiesCostValue = 0;
+
+    for (const amenity of amenities) {
+
+        if (amenity.value === "AC") {
+            amenitiesCostValue += acRate;
+        } else if (amenity.value === "Locker") {
+            amenitiesCostValue += lockerRate;
+        }
+
+    }
+    amenitiesCost.textContent = `${amenitiesCostValue}/-`;
+
+    
+    const total = totalRoomCost + amenitiesCostValue;
+
+    totalCost.textContent = `${total}/-`;
+
+    
+    const balanceValue = total - advanceAmount;
+    
+    balance.textContent = `${balanceValue}/-`;
+});
+        </script>
+
+    </div>
+
+    
+    </body>
+</html>
